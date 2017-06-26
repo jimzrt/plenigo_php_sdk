@@ -62,7 +62,7 @@ class AppManagementService extends Service {
             ApiParams::TEST_MODE => $testModeText,
             'productId' => $productId,
             'description' => $description
-            );
+        );
 
         $url = str_ireplace(ApiParams::URL_USER_ID_TAG, $customerId, ApiURLs::GET_APP_TOKEN);
 
@@ -92,7 +92,7 @@ class AppManagementService extends Service {
         $map = array(
             'useExternalCustomerId' => $useExternalCustomerId,
             ApiParams::TEST_MODE => $testModeText
-            );
+        );
 
         $url = str_ireplace(ApiParams::URL_USER_ID_TAG, $customerId, ApiURLs::GET_APPS_ID);
 
@@ -124,7 +124,7 @@ class AppManagementService extends Service {
             'useExternalCustomerId' => $useExternalCustomerId,
             ApiParams::TEST_MODE => $testModeText,
             'accessToken' => $accessToken
-            );
+        );
 
         $url = str_ireplace(ApiParams::URL_USER_ID_TAG, $customerId, ApiURLs::GET_APPS_ID);
 
@@ -188,7 +188,7 @@ class AppManagementService extends Service {
         $map = array(
             'useExternalCustomerId' => $useExternalCustomerId,
             ApiParams::TEST_MODE => $testModeText
-            );
+        );
 
         $url = str_ireplace(ApiParams::URL_USER_ID_TAG, $customerId, ApiURLs::DELETE_APP_ACCESS);
         $url = str_ireplace(ApiParams::URL_APP_ID_TAG, $appId, $url);
