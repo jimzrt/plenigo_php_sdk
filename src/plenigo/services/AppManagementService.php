@@ -49,18 +49,20 @@ class AppManagementService extends Service {
      * @param string $customerId the Customer ID to send to the API
      * @param string $productId  the Product ID to send to the API
      * @param string $description the App Access Description to send to the API
+     * @param boolean $useExternalCustomerId flag indicating if customer id is an external customer id
      * 
      * @return AppTokenData the access token to get the App ID
      * 
      * @throws PlenigoException
      */
-    public static function requestAppToken($customerId, $productId, $description) {
+    public static function requestAppToken($customerId, $productId, $description, $useExternalCustomerId) {
         $testModeText = (PlenigoManager::get()->isTestMode()) ? 'true' : 'false';
         $map = array(
+            'useExternalCustomerId' => $useExternalCustomerId,
             ApiParams::TEST_MODE => $testModeText,
             'productId' => $productId,
             'description' => $description
-        );
+            );
 
         $url = str_ireplace(ApiParams::URL_USER_ID_TAG, $customerId, ApiURLs::GET_APP_TOKEN);
 
@@ -79,16 +81,18 @@ class AppManagementService extends Service {
      * Executes the request to get all App IDs for a given customer
      * 
      * @param string $customerId the Customer ID to send to the API
+     * @param boolean $useExternalCustomerId flag indicating if customer id is an external customer id
      * 
      * @return array An array of AppAccessData objects
      * 
      * @throws PlenigoException
      */
-    public static function getCustomerApps($customerId) {
+    public static function getCustomerApps($customerId, $useExternalCustomerId) {
         $testModeText = (PlenigoManager::get()->isTestMode()) ? 'true' : 'false';
         $map = array(
+            'useExternalCustomerId' => $useExternalCustomerId,
             ApiParams::TEST_MODE => $testModeText
-        );
+            );
 
         $url = str_ireplace(ApiParams::URL_USER_ID_TAG, $customerId, ApiURLs::GET_APPS_ID);
 
@@ -108,17 +112,19 @@ class AppManagementService extends Service {
      * 
      * @param string $customerId The Customer ID to send to the API
      * @param string $accessToken The Access Token 
+     * @param boolean $useExternalCustomerId flag indicating if customer id is an external customer id
      * 
      * @return AppAccessData the access data with the App ID
      * 
      * @throws PlenigoException
      */
-    public static function requestAppId($customerId, $accessToken) {
+    public static function requestAppId($customerId, $accessToken, $useExternalCustomerId) {
         $testModeText = (PlenigoManager::get()->isTestMode()) ? 'true' : 'false';
         $map = array(
-             ApiParams::TEST_MODE => $testModeText,
+            'useExternalCustomerId' => $useExternalCustomerId,
+            ApiParams::TEST_MODE => $testModeText,
             'accessToken' => $accessToken
-        );
+            );
 
         $url = str_ireplace(ApiParams::URL_USER_ID_TAG, $customerId, ApiURLs::GET_APPS_ID);
 
@@ -139,14 +145,16 @@ class AppManagementService extends Service {
      * @param string $customerId The Customer ID to send to the API
      * @param string $productId The Product ID to send to the API
      * @param string $appId The App ID to send to the API
+     * @param boolean $useExternalCustomerId flag indicating if customer id is an external customer id
      * 
      * @return bool TRUE if the customer can access this product, FALSE otherwise
      */
-    public static function hasUserBought($customerId, $productId, $appId) {
+    public static function hasUserBought($customerId, $productId, $appId, $useExternalCustomerId) {
         $testModeText = (PlenigoManager::get()->isTestMode()) ? 'true' : 'false';
         $map = array(
-            ApiParams::TEST_MODE => $testModeText
-        );
+         'useExternalCustomerId' => $useExternalCustomerId,
+         ApiParams::TEST_MODE => $testModeText
+         );
 
         $url = str_ireplace(ApiParams::URL_USER_ID_TAG, $customerId, ApiURLs::GET_PROD_ACCESS);
         $url = str_ireplace(ApiParams::URL_PROD_ID_TAG, $productId, $url);
@@ -171,14 +179,16 @@ class AppManagementService extends Service {
      * 
      * @param string $customerId he Customer ID to send to the API
      * @param string $appId The App ID to send to the API
+     * @param boolean $useExternalCustomerId flag indicating if customer id is an external customer id
      * 
      * @throws PlenigoException
      */
-    public static function deleteCustomerApp($customerId, $appId) {
+    public static function deleteCustomerApp($customerId, $appId, $useExternalCustomerId) {
         $testModeText = (PlenigoManager::get()->isTestMode()) ? 'true' : 'false';
         $map = array(
+            'useExternalCustomerId' => $useExternalCustomerId,
             ApiParams::TEST_MODE => $testModeText
-        );
+            );
 
         $url = str_ireplace(ApiParams::URL_USER_ID_TAG, $customerId, ApiURLs::DELETE_APP_ACCESS);
         $url = str_ireplace(ApiParams::URL_APP_ID_TAG, $appId, $url);
