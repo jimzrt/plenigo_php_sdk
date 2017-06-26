@@ -24,6 +24,7 @@ class UserManagementService extends Service
 {
 
     const ERR_MSG_EMAIL = "Invalid email address!";
+    const ERR_MSG_GENDER = "Invalid gender. Must be one of MALE/FEMALE/COMPANY.";
     const ERR_MSG_REGISTER = "Error registering a customer";
     const ERR_MSG_CHANGEMAIL = "The email address could not be changed for this user";
     const ERR_MSG_ADDEXTERNALUSERID = "The external user id could not be added to this user";
@@ -45,19 +46,19 @@ class UserManagementService extends Service
 
     /**
      * Registers a new user bound to the company that registers the user. This functionality is only available for companies with closed user groups.
-     *
-     * @param string $email Email address of the user to register
+     * 
+     * @param string $email  Email address of the user to register
      * @param string $language Language of the user as two digit ISO code
-     * @param int $externalUserId An integer number that represents the user in the external system
+     * @param int    $externalUserId An integer number that represents the user in the external system
      * @param string $firstName A given name for the new user
      * @param string $name A las name for the new user
-     *
+     * @param string $gender Gender of the user. Must be one of MALE/FEMALE/COMPANY 
+     * 
      * @return string Id of the created customer.
-     *
+     * 
      * @throws PlenigoException In case of communication errors or invalid parameters.
      */
-    public static function registerUser($email, $language = "en", $externalUserId = null, $firstName = null, $name = null)
-    {
+    public static function registerUser($email, $language = "en", $externalUserId = null, $firstName = null, $name = null, $gender = null) {
 
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $clazz = get_class();
@@ -78,6 +79,14 @@ class UserManagementService extends Service
         }
         if (!is_null($name) && is_string($name)) {
             $map["name"] = $name;
+        }
+        if (!is_null($gender) && is_string($gender)) {
+            if (!in_array($gender, array("MALE", "FEMALE", "COMPANY"))) {
+                $clazz = get_class();
+                PlenigoManager::error($clazz, self::ERR_MSG_GENDER);
+                return null;
+            }
+            $map["gender"] = $gender;
         }
 
         $url = ApiURLs::USER_MGMT_REGISTER;
