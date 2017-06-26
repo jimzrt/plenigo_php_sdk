@@ -47,11 +47,11 @@ class UserManagementService extends Service
     /**
      * Registers a new user bound to the company that registers the user. This functionality is only available for companies with closed user groups.
      * 
-     * @param string $email  Email address of the user to register
+     * @param string $email Email address of the user to register
      * @param string $language Language of the user as two digit ISO code
-     * @param int    $externalUserId An integer number that represents the user in the external system
+     * @param int $externalUserId An integer number that represents the user in the external system
      * @param string $firstName A given name for the new user
-     * @param string $name A las name for the new user
+     * @param string $name A last name for the new user
      * @param string $gender Gender of the user. Must be one of MALE/FEMALE/COMPANY 
      * 
      * @return string Id of the created customer.
