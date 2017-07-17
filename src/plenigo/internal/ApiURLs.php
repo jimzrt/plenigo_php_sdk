@@ -44,7 +44,7 @@ final class ApiURLs
      * This URL is used to check if an user has access to a product.
      * This is usually used to see if a user has bought a product or not.
      */
-    const USER_PRODUCT_ACCESS = "/api/v2/user/product";
+    const USER_PRODUCT_ACCESS = "/api/v2/user/product/details";
 
     /**
      * This URL is used to get user information with the given access token.
